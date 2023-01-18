@@ -1,22 +1,93 @@
 \question{
-      \item Pretende-se estimar o tempo necessário à descarga de um documento da Web.
-      O documento é constituído por um objeto HTML base que referencia três imagens de
-      tamanho $5000$ byte cada. A dimensão do objeto base bem como de todos os pacotes de
-      controlo é desprezável. O cliente liga-se ao servidor através de uma sessão de
-      débito constante igual $1$ $Mbps$ e tempo de ida-e-volta (RTT) igual a $20$ $ms$. Qual
-      o tempo necessário para descarregar o documento em cada uma das condições seguintes:
+  \item Pretende-se estimar o tempo necessário à descarga de um documento da Web.
+  O documento é constituído por um objeto HTML base que referencia três imagens de
+  tamanho $5000$ byte cada. A dimensão do objeto base bem como de todos os pacotes de
+  controlo é desprezável. O cliente liga-se ao servidor através de uma sessão de
+  débito constante igual $1$ $Mbps$ e tempo de ida-e-volta (RTT) igual a $20$ $ms$. Qual
+  o tempo necessário para descarregar o documento em cada uma das condições seguintes:
 }
 
 \begin{enumerate}[leftmargin=\labelsep]
-      \subquestion{
-      \item O browser usa HTTP não-persistente sem sessões TCP paralelas.
-            }
+  \subquestion{
+  \item O browser usa HTTP não-persistente sem sessões TCP paralelas.
+        }
 
-            \subquestion{
-      \item O browser usa HTTP não-persistente, permitindo, no máximo, duas sessões TCP paralelas.
-            }
+        Utilizando HTTP-não persistente (e sem paralelismo de sessões), o browser
+        terá forçosamente de abrir uma nova sessão TCP para cada pedido HTTP.
+        Note-se que haverá um pedido inicial para o objeto base e três pedidos
+        adicionais para as imagens. O diagrama espaço-tempo abaixo ilustra o
+        comportamento em causa:
 
-            \subquestion{
-      \item O browser usa HTTP persistente com pipelining (sem sessões paralelas).
-            }
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.4\textwidth]{assets/003a.svg}
+        \end{figure}
+
+        Vão ser realizados 4 pares "SYN - SYN-ACK" e 4 pares "ACK - Resposta",
+        um por pedido HTTP; assim sendo, teremos no mínimo 8 RTTs para estabelecer
+        as sessões TCP. Considerando o tempo de descarga do ficheiro HTML como
+        desprezável, resta adicionar o tempo de descarga das imagens (igual para
+        cada uma):
+
+        $$
+          \begin{aligned}
+            T_{total} & = 8 \times RTT + 3 \times \frac{5000 \times 2^3}{1 \times 10^6}               \\
+                      & = 8 \times 20 \times 10^{-3} + 3 \times \frac{5000 \times 2^3}{1 \times 10^6} \\
+                      & = 0.16 + 0.12                                                                 \\
+                      & = 0.28 \text{ s}
+          \end{aligned}
+        $$
+
+        \subquestion{
+  \item O browser usa HTTP não-persistente, permitindo, no máximo, duas sessões TCP paralelas.
+        }
+
+        Neste cenário, o diagrama ficará como se segue:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.45\textwidth]{assets/003b.svg}
+        \end{figure}
+
+        Assim sendo, passamos de 8 para 6 RTTs para estabelecer as sessões TCP e fazer
+        os pedidos HTTP. O tempo de descarga do ficheiro HTML é desprezável.
+        Duas das imagens são descarregadas em simultâneo, a metade do ritmo habitual,
+        e a terceira imagem é descarregada após o término das duas primeiras (que ocorrem
+        em simultâneo). Assim sendo, a quantidade de tempo pretendida é dada por:
+
+        $$
+          \begin{aligned}
+            T_{total} & = 6 \times RTT + 2 \times \frac{5000 \times 2^3}{0.5 \times 10^6} + \frac{5000 \times 2^3}{1 \times 10^6}               \\
+                      & = 6 \times 20 \times 10^{-3} + 2 \times \frac{5000 \times 2^3}{0.5 \times 10^6} + \frac{5000 \times 2^3}{1 \times 10^6} \\
+                      & = 0.12 + 0.08 + 0.04                                                                                                    \\
+                      & = 0.24 \text{ s}
+          \end{aligned}
+        $$
+
+        \subquestion{
+  \item O browser usa HTTP persistente com pipelining (sem sessões paralelas).
+        }
+
+        Com HTTP persistente e pipelining, o diagrama fica como se segue:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.35\textwidth]{assets/003c.svg}
+        \end{figure}
+
+        Note-se que as diferenças quanto à primeira alínea centram-se no facto de que
+        neste caso, o browser não precisa de abrir novas sessões TCP para cada pedido
+        HTTP, e ainda em haver pipelining, permitindo a descarga das três imagens num
+        único pedido. Assim sendo, o número de RTTs para estabelecer as sessões TCP passa para 3:
+        o inicial para estabelecer a sessão TCP e os 4 pedidos HTTP. Com contas relativamente
+        semelhantes, podemos assim chegar ao seguinte resultado:
+
+        $$
+          \begin{aligned}
+            T_{total} & = 3 \times RTT + 3 \times \frac{5000 \times 2^3}{1 \times 10^6}               \\
+                      & = 3 \times 20 \times 10^{-3} + 3 \times \frac{5000 \times 2^3}{1 \times 10^6} \\
+                      & = 0.06 + 0.12                                                                 \\
+                      & = 0.18 \text{ s}
+          \end{aligned}
+        $$
 \end{enumerate}
