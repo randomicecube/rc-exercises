@@ -1,0 +1,22 @@
+\question{
+      \item Pretende-se estimar o tempo necessário à descarga de um documento da Web.
+      O documento é constituído por um objeto HTML base que referencia três imagens de
+      tamanho $5000$ byte cada. A dimensão do objeto base bem como de todos os pacotes de
+      controlo é desprezável. O cliente liga-se ao servidor através de uma sessão de
+      débito constante igual $1$ $Mbps$ e tempo de ida-e-volta (RTT) igual a $20$ $ms$. Qual
+      o tempo necessário para descarregar o documento em cada uma das condições seguintes:
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+      \subquestion{
+      \item O browser usa HTTP não-persistente sem sessões TCP paralelas?
+            }
+
+            \subquestion{
+      \item O browser usa HTTP não-persistente, permitindo, no máximo, duas sessões TCP paralelas?
+            }
+
+            \subquestion{
+      \item O browser usa HTTP persistente com pipelining (sem sessões paralelas)?
+            }
+\end{enumerate}

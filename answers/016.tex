@@ -1,0 +1,25 @@
+\question{
+  \item Considere a rede da figura, composta por cinco comutadores Ethernet (Bridges):
+  $V$, $W$, $X$, $Y$, $Z$, um hub e quatro estações: $A$, $B$, $C$, $D$. Considera-se que o identificador
+  de cada comutador é igual ao menor dos endereços MAC das suas interfaces (indicados
+  simplificadamente junto a cada ligação) - por exemplo, o identificador do comutador
+  $W$ será $10$. Todas as ligações têm custo unitário. As tabelas estão inicialmente vazias.
+
+  \begin{figure}[H]
+    \centering
+    \includesvg[width=\textwidth]{assets/016.svg}
+  \end{figure}
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+  \subquestion{
+  \item Usando o algoritmo spanning tree classifique as interfaces de cada um dos
+        comutadores em raiz, designada, ou bloqueada, e indique as BPDUs enviadas por cada
+        comutador em cada uma das suas interfaces quando em regime estacionário.
+        }
+        \subquestion{
+  \item Para a sequência de envio de tramas: ($A \to B$, $C \to D$, $C \to A$, $B \to A$, $D \to C$),
+        indique as interfaces sobre as quais são transmitidas cópias das tramas respectivas
+        e qual o estado das tabelas de expedição de cada comutador no final das várias transmissões.
+        }
+\end{enumerate}

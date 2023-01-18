@@ -1,0 +1,26 @@
+\question{
+  \item Considere a rede da figura sobre a qual opera um protocolo vetor-distância.
+
+  \begin{figure}[H]
+    \centering
+    \includesvg[width=0.4\textwidth]{assets/011.svg}
+  \end{figure}
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+  \subquestion{
+  \item No instante $t_0$ o protocolo está estável, com todos os nós a saber os
+        comprimentos dos caminhos mais curtos para alcançar cada um dos outros nós. Apresente
+        as entradas das tabelas de encaminhamento no que diz respeito ao nó destino $D$.
+        }
+        \subquestion{
+  \item No instante $t_1$ a ligação $A-D$ falha. Assumindo que os nós trocam mensagens
+        sincronamente em instantes bem definidos, $t_1, t_2, t_3, ...$, mostre a evolução das
+        tabelas de encaminhamento até que o protocolo volte a estabilizar.
+        }
+        \subquestion{
+  \item Repita a alínea anterior, mas assumindo agora que o protocolo utilizado é
+        vetor-caminho. Neste protocolo os nós trocam entre si não apenas a distância para
+        alcançar cada destino mas também todo o caminho (sequência de nós) associado a essa distância.
+        }
+\end{enumerate}

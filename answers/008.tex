@@ -1,0 +1,35 @@
+\question{
+  \item Considere os fornecedores de serviços Internet (ISPs) $P$, $Q$ e $R$ interligados
+  da forma ilustrada na figura e em que nenhum deles deverá transportar tráfego de
+  trânsito entre os outros dois. Aos ISPs $P$, $Q$ e $R$ foram atribuídos os blocos de
+  endereços \texttt{193.32.0.0/11}, \texttt{193.64.0.0/11} e \texttt{193.0.0.0/12}, respetivamente.
+  As regiões autónomas (ASes) $P_1$ e $P_2$ são clientes do ISP $P$ e foram-lhes atribuídos
+  os blocos de endereços \texttt{193.50.0.0/16} e \texttt{193.49.0.0/16}, respetivamente.
+  As ASes $Q_1$ e $Q_2$ são clientes do ISP $Q$. A $Q_1$ foi atribuído o bloco de
+  endereços \texttt{193.64.0.0/18}.
+
+  \begin{figure}[H]
+    \centering
+    \includesvg[width=0.6\textwidth]{assets/008.svg}
+  \end{figure}
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+  \subquestion{
+  \item Atribua um bloco de endereços a $Q_2$, sabendo que esta AS precisa de $8000$
+        endereços e escolhendo o endereço base mais baixo possível.
+        }
+        \subquestion{
+  \item Apresente as tabelas de expedição de um encaminhador em $P$, outro em $Q$,
+        e um terceiro em $R$, com pares (prefixo, AS).
+        }
+        \subquestion{
+  \item Suponha que $Q_1$ mudou o seu ISP de $Q$ para $P$. Apresente as novas tabelas
+        de expedição tendo em conta que os endereços atribuídos a Q1 não se alteram.
+        }
+
+        \subquestion{
+  \item Relativamente à alínea anterior, apresente em pseudocódigo um algoritmo para
+        a expedição de datagramas usado num encaminhador do ISP $R$.
+        }
+\end{enumerate}

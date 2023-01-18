@@ -1,0 +1,29 @@
+\question{
+  \item Considere a rede da figura em que o protocolo de encaminhamento usado é por estado-da-ligação.
+
+  \begin{figure}[H]
+    \centering
+    \includesvg[width=0.5\textwidth]{assets/010.svg}
+  \end{figure}
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+  \subquestion{
+  \item Preencha uma tabela ilustrando a execução do algoritmo de Dijkstra a partir do nó $A$.
+        }
+        \subquestion{
+  \item Apresente o pseudocódigo genérico que cada nó tem que executar para a partir
+        dos cálculos efetuados com o algoritmo de Dijkstra popular a sua tabela de expedição.
+        Preencha a tabela de expedição do nó $A$.
+        }
+        \subquestion{
+  \item Suponha que, devido a atrasos na difusão de um LSP, o nó $A$ não tem conhecimento
+        da ligação $D-E$, e só dela não tem conhecimento. Todos os outros nós têm conhecimento
+        completo da topologia da rede. O que acontece aos pacotes enviados pelo nó $A$ com
+        destino ao nó $E$? Conclua sobre o regime transitório de um protocolo estado-da-ligação.
+        }
+        \subquestion{
+  \item Suponha que é estabelecida um nova ligação entre os nós $D$ e $B$ com comprimento $2$.
+        No total, quantos LSPs é que vão viajar pela rede?
+        }
+\end{enumerate}

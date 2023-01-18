@@ -1,0 +1,25 @@
+\question{
+  \item Os sistemas terminais $A$ e $B$ estão ligados a um mesmo comutador de pacotes.
+  O sistema $A$ gera pacotes de dados com $480$ bytes cada a intervalos regulares de $T$ segundos,
+  sendo o primeiro desses pacotes transmitido no instante $t = 0 ms$. A ligação de $A$ ao
+  comutador tem débito $1$ $Mbps$. O sistema $B$ gera pacotes de voz codificada a $64$ $kbit/s$ a
+  intervalos regulares de $20$ $ms$, sendo o primeiro desses pacotes transmitido no instante
+  $t = 3 ms$. A ligação de $B$ ao comutador tem também débito $1$ $Mbps$. A linha de saída do
+  comutador tem débito $256$ $kbit/s$. Desprezam-se os atrasos de processamento e de propagação.
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+  \subquestion{
+  \item Determine a gama de valores de $T$ para os quais o sistema é estável, i.e.,
+        tal que o número de pacotes à espera de transmissão à saída do comutador não
+        aumenta indefinidamente no tempo.
+        }
+
+        \subquestion{
+  \item Assumindo que $T$ é tal que o sistema é estável e que a linha de saída do
+        comutador transmite pacotes na ordem de chegada, independentemente se serem de
+        dados ou de voz, diga qual o atraso máximo na transmissão dos pacotes de voz,
+        medido desde o momento em que um bit está disponível à saída do codificador de voz
+        até que é transmitido na linha de saída do comutador.
+        }
+\end{enumerate}

@@ -1,0 +1,34 @@
+\question{
+  \item Considere o algoritmo de janela deslizante descrito a seguir que não sendo nem
+  Go-Back-N nem Selective-Repeat tem características de ambos e é um algoritmo muito
+  próximo do empregue no TCP. Neste algoritmo, tanto o emissor quanto o receptor têm
+  uma janela de dimensão $N_w$ pacotes, $N_w > 1$, como no Selective-Repeat. No entanto, os
+  ACKs são cumulativos como em Go-Back-N, isto é, se o recetor não recebeu o $i$-ésimo mas
+  recebeu $j$-ésimo pacote, com $j > i$, ele guarda-o na janela de receção, mas devolve um
+  ACK $i$ porque é do $i$-ésimo pacote que ele continua à espera. O emissor lança um temporizador
+  por cada pacote enviado. Se este temporizador expira, o pacote associado, e apenas
+  este, é imediatamente retransmitido.
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+  \subquestion{
+  \item Assumindo que o canal pode perder os pacotes mas não os reordena, qual o
+        módulo mínimo para a sua numeração que assegura a operação correta do protocolo?
+        }
+
+        \subquestion{
+  \item Seja $T$ o tempo de transmissão de um pacote. Assuma que: (i) a janela $N_w$
+        tem dimensão $10$ pacotes; (ii) o atraso de ida-e-volta é $4T$; (iii) e o tempo
+        de espera para a retransmissão de um pacote é $7T$. O emissor tem $12$ pacotes
+        para transmitir. O primeiro destes pacotes, e só ele, é perdido. Faça um diagrama
+        espaço-tempo que mostre a evolução do algoritmo até que todos os pacotes sejam
+        recebidos com sucesso. Em face deste diagrama, conclua sobre o desempenho do algoritmo
+        face aos algoritmos de Go-Back-N e Selective-Repeat, nestas circunstâncias.
+        }
+
+        \subquestion{
+  \item Mostre, também através de diagramas espaço-tempo, uma circunstância em que
+        este algoritmo tem melhor desempenho do que Selective-Repeat.
+        }
+
+\end{enumerate}

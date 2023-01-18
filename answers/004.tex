@@ -1,0 +1,41 @@
+\question{
+      \item Considere as redes da figura, na qual Serv. DNS local é o servidor de nomes
+      configurado em \texttt{me.y.com} e Serv. DNS \texttt{x.com} é o servidor de nomes idóneo (Authoritative
+      Name Server) para o domínio \texttt{x.com}. O tempo de propagação a separar um encaminhador
+      do outro é $100$ $ms$ e o tempo de propagação entre as máquinas da rede \texttt{y.com} e a
+      Internet é de $500$ $ms$ (num sentido apenas). Inicialmente, o Serv. DNS local tem a
+      sua cache de nomes vazia.
+
+      \begin{figure}[H]
+            \centering
+            \includesvg[width=0.5\textwidth]{assets/004.svg}
+      \end{figure}
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+      \subquestion{
+      \item Suponha que o utilizador de um browser em \texttt{me.y.com} digita a URL \texttt{www.x.com/index.html}.
+            Apresente a sequência ordenada de todas as mensagens DNS e HTTP trocadas
+            até que o ficheiro \texttt{index.html} seja recebido em \texttt{me.y.com}.
+            Relembra-se que a pesquisa de nomes a partir de Serv. DNS local é iterativa.
+            Para cada mensagem indique a sua origem, o seu destino e o tipo de mensagem.
+            (Seja tão preciso quanto possível relativamente ao tipo da mensagem).
+            }
+
+            \subquestion{
+      \item Sabendo que o ficheiro \texttt{index.html} residente na máquina \texttt{www.x.com} tem 1 Mbit,
+            determine o atraso desde o momento em que o utilizador digita a URL em \texttt{me.y.com}
+            até que o ficheiro é recebido na totalidade. Considere que o mecanismo de
+            arranque lento não está ativo e despreze o tempo de transmissão de todos os
+            segmentos exceto aqueles que contêm dados do ficheiro \texttt{index.html}.
+            }
+
+            \subquestion{
+      \item Assuma agora que:
+            (i) o ficheiro \texttt{index.html} referencia uma imagem com $5$ $Mbits$;
+            (ii) o browser usa sessões HTTP persistentes;
+            (iii) o mecanismo de arranque lento está ativo;
+            (iv) e o MSS é $50$ $kbit$.
+            Determine o atraso na receção da página, constituída pelo ficheiro mais a imagem.
+            }
+\end{enumerate}
