@@ -15,11 +15,54 @@
         aumenta indefinidamente no tempo.
         }
 
+        O sistema é estável caso o ritmo a que os pacotes de dados chegam ao comutador seja
+        menor ou igual ao ritmo a que os pacotes de dados são transmitidos na linha de saída
+        do mesmo. Note-se que, tal como na alínea anterior, estamos a considerar
+        um mecanismo de \textit{Store and Forward}, pelo que o pacote terá de ser
+        completamente recebido no comutador antes de ser transmitido na linha de saída.
+        Assim sendo:
+
+        $$
+          \text{output rate} \geq \text{input rate} \leftrightarrow
+          256 \text{ kbit/s} \geq 64 \text{ kbit/s} + \text{rate de A}
+        $$
+
+        Neste sentido, o ritmo de saída de $A$ não poderá exceder $192$ $kbit/s$ -
+        com pacotes de $480$ bytes, isto quer dizer que só devemos enviar pacotes
+        de $A$ a intervalos de $T \geq \frac{480 \times 2^3}{192 \times 10^3} = 20ms$.
+
         \subquestion{
   \item Assumindo que $T$ é tal que o sistema é estável e que a linha de saída do
-        comutador transmite pacotes na ordem de chegada, independentemente se serem de
+        comutador transmite pacotes na ordem de chegada, independentemente de serem de
         dados ou de voz, diga qual o atraso máximo na transmissão dos pacotes de voz,
         medido desde o momento em que um bit está disponível à saída do codificador de voz
         até que é transmitido na linha de saída do comutador.
         }
+
+        \textbf{Nota: exercício atualmente errado, de acordo com as soluções.}
+
+        Sendo o sistema estável, temos como pior cenário o caso em que os pacotes de dados
+        e voz chegam ao mesmo tempo ao comutador, e em que o comutador transmite primeiro
+        o pacote de dados. Neste caso, a quantidade de tempo pedida corresponde ao tempo
+        de transmissão de um pacote de voz entre $B$ e o comutador, somado ao tempo de
+        transmissão de um pacote de dados entre o comutador e o exterior.
+
+        Em primeiro lugar, é importante notar que não é dado o tamanho de um pacote de voz.
+        Sabemos, contudo, que é criado um pacote a cada $20 ms$, a um ritmo de $64$ $kbit/s$.
+        Assim sendo, são criados $50$ pacotes por secundo, pelo que cada um deles terá
+        $\frac{64 \times 10^3}{50} = 1280$ bits. O tempo de transmissão de um pacote de voz
+        entre $B$ e o comutador é, portanto, dado por:
+
+        $$
+          t_{B-com} = 1.28 \times 10^{-3} \text{ s} = 1.28 \text{ ms}
+        $$
+
+        O tempo de transmissão de um pacote de dados entre o comutador e o exterior é dado
+        pela seguinte expressão:
+
+        $$
+          t_{com-out} = \frac{480 \times 2^3}{256 \times 10^3} = 15 \text{ ms}
+        $$
+
+        Assim sendo, o atraso máximo na transmissão dos pacotes de voz é dado por $0.128 + 15 = 16.28$ $ms$.
 \end{enumerate}
