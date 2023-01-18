@@ -1,0 +1,38 @@
+\question {
+  \item Considere um sistema terminal $X$ que pretende enviar um ficheiro com $100$ $K_iB$
+  a um sistema terminal $Y$ através de um caminho com quatro ligações como ilustrado
+  nas figuras abaixo. É usada uma tecnologia de comutação de pacotes, contendo
+  cada pacote $5$ $K_iB$. Os atrasos de propagação nas ligações, bem como
+  os atrasos de processamento nos nós, são desprezáveis.
+
+  \begin{figure}[H]
+    \centering
+    \includesvg[width=0.7\textwidth]{assets/001.svg}
+  \end{figure}
+}
+
+\begin{enumerate}[leftmargin=\labelsep]
+  \subquestion{
+  \item Na topologia da Figura a), cada uma das quatro ligações é cablada com ritmo de
+        transmissão $10$ $Mbps$. Desenhe um diagrama espaço-tempo ilustrando a transferência
+        do ficheiro e calcule o atraso na entrega do mesmo, desde a transmissão do primeiro
+        bit por $X$ até à receção do último bit por $Y$.
+        }
+
+        \subquestion{
+  \item Na topologia da Figura b), as ligações $(A,B)$ e $(B,C)$, e apenas
+        estas, passaram a um ritmo de transmissão de $50$ $Mbps$. Repita a alínea
+        anterior para este caso.
+        }
+
+        \subquestion{
+  \item Na topologia da Figura c), as ligações $(A,B)$ e $(B,C)$ passaram
+        a ser ligações sem-fios a $10$ $Mbps$. As antenas usadas são omnidirecionais
+        (o nó $B$ não pode receber e transmitir simultaneamente) e assume-se que os
+        nós $A$ e $C$ não conseguem escutar as transmissões um do outro. Desenhe um
+        diagrama espaço-tempo ilustrando a transferência do ficheiro e calcule o
+        atraso mínimo na entrega do mesmo, desde a transmissão do primeiro bit
+        por $X$ até à receção do último bit por $Y$.
+        }
+
+\end{enumerate}
