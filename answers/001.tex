@@ -19,11 +19,83 @@
         bit por $X$ até à receção do último bit por $Y$.
         }
 
+        Em primeiro lugar, é relevante realçar que estas transmissões utilizam o
+        mecanismo de \textit{Store-and-forward}: cada pacote só pode avançar quando
+        todo o seu conteúdo chega ao \textit{hop} atual. Assim sendo, considerando
+        três \textit{hops} intermédios entre os sistemas terminais, teremos o seguinte:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.7\textwidth]{assets/001a.svg}
+        \end{figure}
+
+        Descobrir a quantidade de tempo que demora a transferir todo o ficheiro
+        entre sistemas terminais é relativamente simples. É particularmente
+        relevante considerar que apenas se sentem atrasos "no que ao primeiro pacote
+        diz respeito": é o único com espera "inútil", onde o canal à frente está livre
+        mas é obrigado a esperar. O atraso corresponde precisamente ao produto
+        entre o número de \textit{hops} e o tempo de transmissão de um pacote,
+        sendo que este é calculado através da expressão $L/R$, onde $L$ é a
+        quantidade de bits a transmitir e $R$ é o ritmo de transmissão.
+        Considerando que temos $5 K_iB = 5 \cdot 2^{10} \cdot 2^3$ bits a transmitir,
+        temos:
+
+        $$
+          \begin{aligned}
+            \text{Atraso} & = 3 \cdot \frac{L}{R}                                    \\
+                          & = 3 \cdot \frac{5 \cdot 2^{13}}{10 \cdot 10^6} \text{ s}
+          \end{aligned}
+        $$
+
+        Assim sendo, o tempo total de transmissão corresponderá à soma entre o atraso
+        e o tempo de transmissão de todos os pacotes sem atraso, ou seja:
+
+        $$
+          \begin{aligned}
+            \text{T} & = \text{Atraso} + N \cdot \frac{L}{R}                           \\
+                     & = (3 + 20) \cdot \frac{5 \cdot 2^{13}}{10 \cdot 10^6} \text{ s} \\
+                     & = 0.094208 \text{ s}
+          \end{aligned}
+        $$
+
         \subquestion{
   \item Na topologia da Figura b), as ligações $(A,B)$ e $(B,C)$, e apenas
         estas, passaram a um ritmo de transmissão de $50$ $Mbps$. Repita a alínea
         anterior para este caso.
         }
+
+        A alteração não é particularmente significativa, afetando apenas a transmissão
+        dos pacotes intra-\textit{hops}. Neste sentido, o diagrama espaço-tempo
+        será o seguinte (note-se que a diferença centra-se no tempo de transmissão
+        de cada pacote):
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.7\textwidth]{assets/001b.svg}
+        \end{figure}
+
+        Neste caso, o atraso é calculado de forma ligeiramente diferente, uma vez
+        que o tempo de transmissão de cada pacote é agora variável - tanto podemos
+        considerar $\frac{L}{R_1}$, com $R_1 = 10$ $Mbps$, como $\frac{L}{R_2}$,
+        com $R_2 = 50$ $Mbps$. Assim sendo, e atendendo ao diagrama exposto
+        acima (onde o primeiro pacote \textit{espera} duas vezes num canal com
+        ritmo $R_2$ e uma num canal com ritmo $R_1$), temos:
+
+        $$
+          \begin{aligned}
+            \text{Atraso} & = \frac{L}{R_1} + 2 \cdot \frac{L}{R_2}                       \\
+                          & = L \cdot \left( \frac{1}{R_1} + 2 \cdot \frac{1}{R_2}\right)
+          \end{aligned}
+        $$
+
+        Para além do atraso, temos ainda o tempo de transmissão de todos os pacotes,
+        que é calculado da mesma forma que na alínea anterior:
+
+        $$
+          \text{T} = \text{Atraso} + N \cdot \frac{L}{R_1}
+          = L \cdot \left( \frac{1}{R_1} + 2 \cdot \frac{1}{R_2} + \frac{20}{R_1} \right)
+          = 0.087654 \text{ s}
+        $$
 
         \subquestion{
   \item Na topologia da Figura c), as ligações $(A,B)$ e $(B,C)$ passaram
@@ -34,5 +106,26 @@
         atraso mínimo na entrega do mesmo, desde a transmissão do primeiro bit
         por $X$ até à receção do último bit por $Y$.
         }
+
+        Neste caso, o diagrama espaço-tempo é o seguinte:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.7\textwidth]{assets/001c.svg}
+        \end{figure}
+
+        Note-se que o atraso inicial é exatamente igual ao da primeira alínea - o primeiro pacote não vê
+        alterações no seu comportamento. Contudo, os pacotes seguintes passam a ter
+        comportamento "alternado", passando a poder avançar apenas quando $B$ fica
+        completamente desocupado (e não quando $A-B$ fica desocupado). Assim sendo,
+        o atraso adicional será, claro, maior (o dobro):
+
+        $$
+          \begin{aligned}
+            \text{T} & = \text{Atraso} + 2N \cdot \frac{L}{R}                                  \\
+                     & = (3 + 2 \cdot 20) \cdot \frac{5 \cdot 2^{13}}{10 \cdot 10^6} \text{ s} \\
+                     & = 0.176128 \text{ s}
+          \end{aligned}
+        $$
 
 \end{enumerate}
