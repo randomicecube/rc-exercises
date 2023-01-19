@@ -96,6 +96,10 @@
         \begin{itemize}
           \item 0.05 segundos para a transferência do primeiro segmento;
           \item 0.2 + 0.1 segundos para a transferência dos dois segmentos seguintes;
+          \item 0.2 + 0.2 segundos para a transferência dos quatro segmentos seguintes.
+                Note-se que aqui os segmentos levam precisamente o equivalente
+                a um RTT a ser transferidos, pelo que a partir daqui iremos transferir
+                todos os segmentos de forma contínua.
           \item 0.2 + $x$ segundos para a transferência dos restantes segmentos - aqui, após
                 o arranque lento, estamos finalmente num cenário de transferência de dados
                 contínuo. Tendo já sido transferidos três segmentos, resta-nos transferir $N-3$ segmentos,
@@ -108,10 +112,10 @@
           N = \frac{5 \cdot 10^6 + 1 \cdot 10^6}{50 \cdot 10^3} = 120
         $$
 
-        Restando transferir $N-3 = 117$ segmentos, temos que o tempo de transferência dos restantes
-        segmentos será dado por $x = 0.05 \cdot 117 = 5.85$ segundos. Note-se que será ainda
+        Restando transferir $N-7 = 113$ segmentos, temos que o tempo de transferência dos restantes
+        segmentos será dado por $x = 0.05 \cdot 113 = 5.65$ segundos. Note-se que será ainda
         adicionado um RTT, $200$ $ms$, para a transferência do ficheiro de imagem.
 
-        Assim, temos que no total, a interação em questão leva $2600 + 50 + 200 + 100 + 5850 + 200 = 9000$ $ms$.
+        Assim, temos que no total, a interação em questão leva $2600 + 50 + 200 + 100 + 200 + 200 + 5650 + 200 = 9200$ $ms$.
 
 \end{enumerate}
