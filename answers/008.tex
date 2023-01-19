@@ -47,13 +47,72 @@
   \item Apresente as tabelas de expedição de um encaminhador em $P$, outro em $Q$,
         e um terceiro em $R$, com pares (prefixo, AS).
         }
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l}
+              & Subnet     & Subnet mask       & AS    \\ \hline
+            1 & 193.50.0.0 & 255.255.0.0 (/16) & $P_1$ \\
+            2 & 193.49.0.0 & 255.255.0.0 (/16) & $P_2$ \\
+            3 & 193.64.0.0 & 255.224.0.0 (/11) & $Q$   \\
+            4 & 193.0.0.0  & 255.240.0.0 (/12) & $R$   \\
+            5 & 193.32.0.0 & 255.224.0.0 (/11) & $P$
+          \end{tabular}
+          \caption{Tabela de encaminhamento para um encaminhador em $P$}
+          \label{tab:p-ftable}
+        \end{table}
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l}
+              & Subnet      & Subnet mask         & AS    \\ \hline
+            1 & 193.64.0.0  & 255.255.192.0 (/18) & $Q_1$ \\
+            2 & 193.64.64.0 & 255.255.224.0 (/19) & $Q_2$ \\
+            3 & 193.32.0.0  & 255.224.0.0 (/11)   & $P$   \\
+            4 & 193.0.0.0   & 255.240.0.0 (/12)   & $R$   \\
+            5 & 193.64.0.0  & 255.224.0.0 (/11)   & $Q$
+          \end{tabular}
+          \caption{Tabela de encaminhamento para um encaminhador em $Q$}
+          \label{tab:q-ftable}
+        \end{table}
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l}
+              & Subnet     & Subnet mask       & AS  \\ \hline
+            1 & 193.32.0.0 & 255.224.0.0 (/11) & $P$ \\
+            2 & 193.64.0.0 & 255.224.0.0 (/11) & $Q$ \\
+            3 & 193.0.0.0  & 255.240.0.0 (/12) & $R$
+          \end{tabular}
+          \caption{Tabela de encaminhamento para um encaminhador em $R$}
+          \label{tab:r-ftable}
+        \end{table}
+
         \subquestion{
   \item Suponha que $Q_1$ mudou o seu ISP de $Q$ para $P$. Apresente as novas tabelas
         de expedição tendo em conta que os endereços atribuídos a Q1 não se alteram.
         }
 
+        As alterações às tabelas são mínimas: em $P$, é inserida a rota para $Q_1$;
+        em $Q$ a rota para $Q_1$ é alterada, com o AS da mesma a passar para $P$ (em vez de
+        $Q_1$ diretamente); é adicionada uma rota ao encaminhador em $R$ para $Q_1$
+        (mas com referência ao AS $P$ em vez de $Q_1$).
+
         \subquestion{
   \item Relativamente à alínea anterior, apresente em pseudocódigo um algoritmo para
         a expedição de datagramas usado num encaminhador do ISP $R$.
         }
+
+        Seria algo como:
+
+        \begin{enumerate}
+          \item Se $\texttt{IP\_destino} \wedge 255.224.0.0 = 193.32.0.0$ OU
+                $\texttt{IP\_destino} \wedge 255.255.192.0 = 193.64.0.0$, enviar para $P$.
+          \item Caso contrário, se $\texttt{IP\_destino} \wedge 255.224.0.0 = 193.64.0.0$,
+                enviar para $Q$.
+          \item Caso contrário, se $\texttt{IP\_destino} \wedge 255.240.0.0 = 193.0.0.0$, enviar para $R$.
+        \end{enumerate}
+
+        Note-se que não existe aqui (porque não é especificada no enunciado) a \textit{default route},
+        com endereço a comparar e máscara ambos a zeros.
 \end{enumerate}
