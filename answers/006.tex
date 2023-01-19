@@ -22,7 +22,13 @@ que leva a enviar um pacote e o respetivo ACK chegar. Neste sentido, o que vamos
 é o seguinte:
 
 $$
-  N_{window} \times \dots
+  N_{window} \times \frac{L}{R} = \frac{L}{R} + RTT
+$$
+
+Assim sendo, isto será o mesmo que ter o seguinte:
+
+$$
+  N_{window} = 1 + \frac{RTT}{\frac{L}{R}} = 1 + \frac{0.05}{\frac{1000}{100 \times 10^6}} = 1 + 5000 = 5001
 $$
 
 A lógica é em tudo igual para o Selective-Repeat, já que o mecanismo aqui relevante
