@@ -8,7 +8,7 @@
 
   \begin{figure}[H]
     \centering
-    \includesvg[width=0.5\textwidth]{assets/004.svg}
+    \includesvg[width=0.4\textwidth]{assets/004.svg}
   \end{figure}
 }
 
@@ -22,6 +22,25 @@
         (Seja tão preciso quanto possível relativamente ao tipo da mensagem).
         }
 
+        A tabela seguinte corresponde a uma listagem ordenada das mensagens DNS e HTTP trocadas.
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l|l}
+               & \textbf{Tipo} & \textbf{Origem}  & \textbf{Destino} & \textbf{Comentário}                        \\
+            1  & DNS Query     & me.y.com         & Serv. DNS local  & -                                          \\
+            2  & DNS Query     & Serv. DNS local  & Root Name Server & -                                          \\
+            3  & DNS Response  & Root Name Server & Serv. DNS local  & Root não sabe, aponta p/ TLD               \\
+            4  & DNS Query     & Serv. DNS local  & TLD Server       & -                                          \\
+            5  & DNS Response  & TLD Server       & Serv. DNS local  & TLD não sabe, aponta p/ Serv. DNS de x.com \\
+            6  & DNS Query     & Serv. DNS local  & Serv. DNS x.com  & -                                          \\
+            7  & DNS Response  & Serv. DNS x.com  & Serv. DNS local  & Serv. DNS de x.com indica o IP da máquina  \\
+            8  & DNS Response  & Serv. DNS local  & me.y.com         & me.y.com terá agora o IP de x.com          \\
+            9  & GET HTTP/1.1  & me.y.com         & www.x.com        & Pedido index.html                          \\
+            10 & HTTP 200 OK   & www.x.com        & me.y.com         & Ficheiro enviado
+          \end{tabular}
+        \end{table}
+
         \subquestion{
   \item Sabendo que o ficheiro \texttt{index.html} residente na máquina \texttt{www.x.com} tem 1 Mbit,
         determine o atraso desde o momento em que o utilizador digita a URL em \texttt{me.y.com}
@@ -29,6 +48,25 @@
         arranque lento não está ativo e despreze o tempo de transmissão de todos os
         segmentos exceto aqueles que contêm dados do ficheiro \texttt{index.html}.
         }
+
+        Para calcular o atraso pretendido, faz sentido suportar o nosso pensamento na tabela
+        anterior. Note-se que o tempo de propagação entre \texttt{me.y.com} e o
+        respetivo servidor de nomes é considerado desprezável.
+
+        \begin{itemize}
+          \item As mensagens 2 e 3, entre Serv. DNS local e Root Name Server,
+                levam $2 \cdot 500$ $ms$, já que o tempo de propagação num só sentido
+                é de $500$ $ms$.
+          \item As mensagens 4 e 5, entre Serv. DNS local e TLD Server,
+                levam $2 \cdot 500$ $ms$.
+          \item As mensagens 6 e 7, entre Serv. DNS local e Serv. DNS x.com,
+                levam $2 \cdot 100$ $ms$, já que aqui não vamos à \textit{black-box} Internet,
+                passando diretamente entre comutadores.
+          \item As mensagens 9 e 10 levam $2 \cdot 2 \cdot 100$ $ms$, contando com o par
+                SYN/ACK e o par ACK GET/transmissão do ficheiro.
+        \end{itemize}
+
+        Assim sendo, o atraso total é de $2 \cdot 500 + 2 \cdot 500 + 2 \cdot 100 + 2 \cdot 2 \cdot 100 + 1000 = 3600$ $ms$.
 
         \subquestion{
   \item Assuma agora que:
@@ -38,4 +76,42 @@
         (iv) e o MSS é $50$ $kbit$.
         Determine o atraso na receção da página, constituída pelo ficheiro mais a imagem.
         }
+
+        Em primeiro lugar, é relevante realçar que é mencionada a existência de sessões
+        HTTP persistentes, mas nada é referido no que a pipelining diz respeito. Neste sentido,
+        essa noção será aqui descartada. Mais ainda, é referido o mecanismo de arranque lento,
+        com MSS de $50$ $kbit$. Note-se que esta alteração não afeta os tempos de propagação até
+        ao envio do primeiro segmento de \textit{index.html} (inclusive), pelo que a \textit{baseline}
+        temporal será de $2600$ $ms$.
+
+        As mensagens seguintes verão um diagrama espaço-tempo como o que se segue:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.4\textwidth]{assets/004c.svg}
+        \end{figure}
+
+        Assim sendo, aos $2600$ $ms$ da \textit{baseline} acrescem os seguintes tempos:
+
+        \begin{itemize}
+          \item 0.05 segundos para a transferência do primeiro segmento;
+          \item 0.2 + 0.1 segundos para a transferência dos dois segmentos seguintes;
+          \item 0.2 + $x$ segundos para a transferência dos restantes segmentos - aqui, após
+                o arranque lento, estamos finalmente num cenário de transferência de dados
+                contínuo. Tendo já sido transferidos três segmentos, resta-nos transferir $N-3$ segmentos,
+                onde $N$ corresponde ao número de segmentos necessários para transmitir
+                o ficheiro \texttt{html} e respetiva imagem.
+        \end{itemize}
+
+
+        $$
+          N = \frac{5 \cdot 10^6 + 1 \cdot 10^6}{50 \cdot 10^3} = 120
+        $$
+
+        Restando transferir $N-3 = 117$ segmentos, temos que o tempo de transferência dos restantes
+        segmentos será dado por $x = 0.05 \cdot 117 = 5.85$ segundos. Note-se que será ainda
+        adicionado um RTT, $200$ $ms$, para a transferência do ficheiro de imagem.
+
+        Assim, temos que no total, a interação em questão leva $2600 + 50 + 200 + 100 + 5850 + 200 = 9000$ $ms$.
+
 \end{enumerate}

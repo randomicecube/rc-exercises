@@ -4,9 +4,9 @@ My solutions to the Computer Networks exercise sheets.
 
 - [x] Exercise 1
 - [x] Exercise 2 (review pending on b))
-- [ ] Exercise 3
-- [ ] Exercise 4
-- [ ] Exercise 5
+- [x] Exercise 3
+- [x] Exercise 4 (review pending on c))
+- [x] Exercise 5
 - [ ] Exercise 6
 - [ ] Exercise 7
 - [ ] Exercise 8

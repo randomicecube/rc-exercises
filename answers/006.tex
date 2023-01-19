@@ -1,8 +1,29 @@
 \question{
   \item Considere um caminho de $5000$ $km$ de comprimento com atraso de propagação
-  igual a $5$ $μs/km$, e sobre o qual consegue transmitir a um débito máximo de 100 Mbit/s.
+  igual a $5$ $\mu s/km$, e sobre o qual consegue transmitir a um débito máximo de 100 Mbit/s.
   Suponha que usa um algoritmo de janela deslizante para controlo de erros e controlo de fluxo.
   Cada pacote tem 1000 bits. Se usar Go-Back-N qual a dimensão mínima da janela,
   em número de pacotes, que garante uma eficiência de utilização do caminho de 100\%?
   E se usar Selective-Repeat?
 }
+
+Garantimos eficiência de utilização de 100\% caso nunca se esteja \textit{idle} - isto é,
+estamos sempre a transmitir ou receber dados. Para tal, é necessário que a janela seja
+grande o suficiente para que, assim que o último pacote de um conjunto de $N$ pacotes
+é enviado, começamos a receber o primeiro pacote desse mesmo conjunto.
+
+Ora, em primeiro lugar será relevante calcular o RTT: neste caso, corresponde a
+duas vezes o atraso de propagação sobre todo o comprimento do caminho, ou seja,
+$2 \times 5000 \times 5 \times 10^{-6} = 0.05$ $s$.
+
+Ora, o nosso objetivo é o de encontrar um valor $N_{window}$ tal que enviar $N_{window}$
+pacotes seja \textbf{igual} (já que queremos eficiência de utilização de 100\%) ao tempo
+que leva a enviar um pacote e o respetivo ACK chegar. Neste sentido, o que vamos querer
+é o seguinte:
+
+$$
+  N_{window} \times \dots
+$$
+
+A lógica é em tudo igual para o Selective-Repeat, já que o mecanismo aqui relevante
+é o de janela deslizante, não sendo relevante a "tipologia" do mesmo.

@@ -12,6 +12,16 @@
         o ficheiro seja distribuído a todas as estações?
         }
 
+        O servidor terá de distribuir o envio do ficheiro por três clientes, pelo
+        que a largura de banda uplink do mesmo será dividida por três. Assim sendo,
+        e considerando que a largura de banda downlink de cada estação é muito elevada (pelo que este não será o \textit{bottleneck}),
+        o tempo mínimo necessário para que o ficheiro seja distribuído a todas as estações
+        é dado por:
+
+        $$
+          T_{min} = 3 \times \frac{100 \text{ MiB}}{1 \text{ Mbit/s}} = 3 \times \frac{100 \times 2^{20} \times 2^3}{1 \times 10^6} = 2516.5824 \text{ s}
+        $$
+
         \subquestion{
   \item Considere agora uma aplicação peer-to-peer em que as estações usam as suas
         larguras de banda uplink para ajudar a distribuir o ficheiro. O servidor envia
@@ -20,4 +30,26 @@
         Encontre uma boa estratégia para distribuir o ficheiro por todas as estações, e
         de acordo com ela diga qual o tempo mínimo necessário para a distribuição do ficheiro?
         }
+
+        O ficheiro é distribuído por todas as estações, sendo dividido em $N$ (com $N=3$)
+        partes distintas, uma por estação. Cada estação recebe uma parte do ficheiro e
+        envia a cada uma das outras duas estações a sua parte. Assim sendo, a largura de
+        banda uplink de cada estação será dividida por $N-1$. Assim sendo:
+
+        $$
+          T_{upload-servidor} = 3 \times \frac{\frac{100}{3} \times 2^{23}}{1 \times 10^6} = 838.8608 \text{ s}
+        $$
+
+        Resta ainda calcular o tempo de upload de cada estação para as outras duas estações.
+
+        $$
+          T_{upload-estacao} = \frac{N \times L}{u_{servidor} + \sum{u_{estacao}}} = \frac {3 \times 100 \times 2^{23}}{10^6 + 3 \times 200 \times 10^3} = 1572.864 \text{ s}
+        $$
+
+        Note-se que o tempo mínimo necessário para a distribuição do ficheiro é dado
+        (considerando que o \textit{download} não é o \textit{bottleneck}) por:
+
+        $$
+          T_{min} = \max\{T_{upload-servidor}, T_{upload-estacao}\} = 1572.864 \text{ s}
+        $$
 \end{enumerate}
