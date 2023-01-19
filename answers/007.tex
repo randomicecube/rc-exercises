@@ -50,9 +50,16 @@
         }
 
         Caso haja perda de ACKs, o algoritmo em questão tem melhor desempenho do que
-        Selective-Repeat - o algoritmo proposto nesta pergunta consegue continuar
-        a enviar os pacotes $N + 1$ e acima, mesmo com a perda do pacote $N$,
-        enquanto que no caso de Selective-Repeat terá de ocorrer retransmissão
-        (e a janela parará de deslizar até que o mesmo seja \textit{acknowledged}).
+        Selective-Repeat. Considere-se o cenário em que são enviados 7 pacotes, e em que
+        os primeiros 6 ACKs são perdidos, mas o último é recebido com sucesso.
+
+        \begin{itemize}
+          \item No caso do algoritmo proposto neste exercício, com ACKs cumulativos,
+                o emissor sabe, ao receber ACK 8, que tudo até ao 7º pacote foi recebido
+                com sucesso, pelo que pode continuar a enviar pacotes.
+          \item No caso de Selective Repeat, o recetor envia ACK 7 (não ACK 8),
+                e sem ter recebido nada sobre os anteriores terá de retransmitir todos os
+                outros pacotes, o que levaria a uma performance inferior.
+        \end{itemize}
 
 \end{enumerate}

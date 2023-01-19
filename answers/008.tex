@@ -19,6 +19,30 @@
   \item Atribua um bloco de endereços a $Q_2$, sabendo que esta AS precisa de $8000$
         endereços e escolhendo o endereço base mais baixo possível.
         }
+
+        $Q_2$ precisa de 8000 endereços - neste sentido, nunca será possível atribuir
+        um bloco de endereços com sufixo superior a $/(32 - \ceil[\big]{\log_2{8000}}) = /19$.
+        Mais ainda, foi atribuído a $Q_1$ o bloco \texttt{193.64.0.0/18}, pelo
+        que todos os endereços no intervalo \texttt{193.64.0.0} a \texttt{193.64.63.255}
+        estão também ocupados: em binário, é o equivalente a ter os endereços no
+        seguinte intervalo ocupados:
+
+        $$
+          [\texttt{\textcolor{orange}{11000001.01000000.00}000000.00000000}, \texttt{\textcolor{orange}{11000001.01000000.00}111111.11111111}]
+        $$
+
+        Assim sendo, o endereço mais baixo possível para $Q_2$ é \texttt{193.64.64.0},
+        já que todos os anteriores estão ocupados. Alocando um bloco de endereços com
+        $\ceil[\big]{\log_2{8000}} = 13$ bits, temos que o bloco a atribuir a $Q_2$ é
+        \texttt{193.64.0.0/19}:
+
+        $$
+          [\texttt{\textcolor{purple}{11000001.01000000.010}00000.00000000}, \texttt{\textcolor{purple}{11000001.01000000.010}11111.11111111}]
+        $$
+
+        Note-se, claro, que nenhum destes endereços se encontra no bloco de endereços
+        atribuído a $Q_1$.
+
         \subquestion{
   \item Apresente as tabelas de expedição de um encaminhador em $P$, outro em $Q$,
         e um terceiro em $R$, com pares (prefixo, AS).
