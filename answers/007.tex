@@ -1,10 +1,10 @@
 \question{
-  \item Considere o algoritmo de janela deslizante descrito a seguir que não sendo nem
-  Go-Back-N nem Selective-Repeat tem características de ambos e é um algoritmo muito
+  \item Considere o algoritmo de janela deslizante descrito a seguir que, não sendo nem
+  Go-Back-N nem Selective-Repeat, tem características de ambos, e é um algoritmo muito
   próximo do empregue no TCP. Neste algoritmo, tanto o emissor quanto o receptor têm
   uma janela de dimensão $N_w$ pacotes, $N_w > 1$, como no Selective-Repeat. No entanto, os
-  ACKs são cumulativos como em Go-Back-N, isto é, se o recetor não recebeu o $i$-ésimo mas
-  recebeu $j$-ésimo pacote, com $j > i$, ele guarda-o na janela de receção, mas devolve um
+  ACKs são cumulativos como em Go-Back-N: isto é, se o recetor não recebeu o $i$-ésimo mas
+  recebeu o $j$-ésimo pacote, com $j > i$, ele guarda-o na janela de receção, mas devolve um
   ACK $i$ porque é do $i$-ésimo pacote que ele continua à espera. O emissor lança um temporizador
   por cada pacote enviado. Se este temporizador expira, o pacote associado, e apenas
   este, é imediatamente retransmitido.
@@ -16,6 +16,10 @@
         módulo mínimo para a sua numeração que assegura a operação correta do protocolo?
         }
 
+        Sabemos, por definição, que em algoritmos de janela deslizante o módulo
+        mínimo para a numeração dos pacotes corresponde a $N_{emissor} + N_{receptor}$;
+        neste sentido, temos que aqui o módulo mínimo é $2N_w$.
+
         \subquestion{
   \item Seja $T$ o tempo de transmissão de um pacote. Assuma que: (i) a janela $N_w$
         tem dimensão $10$ pacotes; (ii) o atraso de ida-e-volta é $4T$; (iii) e o tempo
@@ -26,9 +30,29 @@
         face aos algoritmos de Go-Back-N e Selective-Repeat, nestas circunstâncias.
         }
 
+        Apresenta-se abaixo o diagrama espaço-tempo do algoritmo em questão.
+
+        \begin{figure}[h]
+          \centering
+          \includesvg[width=0.6\textwidth]{assets/007b.svg}
+        \end{figure}
+
+        As diferenças para os algoritmos Go-Back-N e Selective-Repeat são relativamente
+        sucintas: no caso do primeiro, toda a janela teria de ser retransmitida, o que
+        implicaria a transmissão de 2 segmentos adicionais (7 e 8) - pior performance;
+        com Selective Repeat, por outro lado, teria apenas de se retransmitir o primeiro
+        segmento (já que os restantes ACKs seriam enviados com sucesso), o que
+        levaria a melhor performance.
+
         \subquestion{
   \item Mostre, também através de diagramas espaço-tempo, uma circunstância em que
         este algoritmo tem melhor desempenho do que Selective-Repeat.
         }
+
+        Caso haja perda de ACKs, o algoritmo em questão tem melhor desempenho do que
+        Selective-Repeat - o algoritmo proposto nesta pergunta consegue continuar
+        a enviar os pacotes $N + 1$ e acima, mesmo com a perda do pacote $N$,
+        enquanto que no caso de Selective-Repeat terá de ocorrer retransmissão
+        (e a janela parará de deslizar até que o mesmo seja \textit{acknowledged}).
 
 \end{enumerate}
