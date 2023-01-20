@@ -5,3 +5,41 @@
   comprimento e offset de todos os fragmentos entregues à camada de rede do destino.
   O cabeçalho de qualquer datagrama IP tem $20$ bytes.
 }
+
+A resolução deste exercício tem algumas particularidades que o tornam menos trivial.
+O primeiro pensamento seria provavelmente dividir o segmento TCP (com 2068 bytes)
+em três datagramas IP, dois com $1004 + 20$ bytes e um com $2 \times 20 + 20 + 20$ bytes.
+Ora, isto não é possível, já que juntamente com o datagrama IP é também enviado um
+offset ($\frac{\text{data length}}{8}$) inteiro. Neste caso, $\frac{1004}{8}$ não é um inteiro,
+pelo que seremos obrigados a enviar, no máximo $1000$ bytes de dados. Assim sendo,
+de TCP para IP ficamos com três segmentos:
+
+\begin{itemize}
+  \item Dois segmentos de tamanho $1020$ bytes, com $1000$ bytes de dados;
+  \item Um segmento com os restantes $68$ bytes de dados (isto inclui os 20 bytes
+        do cabeçalho TCP), mais $20$ bytes de cabeçalho. Note-se que, sendo o último elemento,
+        a necessidade de \text{data length} divisível por 8 não se aplica.
+\end{itemize}
+
+Por fim, podemos então olhar para a segunda ligação IP. Como o MTU é de $512$ bytes,
+em cada datagrama IP podemos enviar $492$ bytes de dados. Mais uma vez, $492$ não
+é divisível por 8 - na verdade, podemos enviar no máximo, por segmento, $488$ bytes
+de dados. Assim sendo, temos:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l|l|l|l}
+      & Datagram size & Data size & Offset (8-byte blocks) \\ \hline
+    1 & 508           & 488       & 0                      \\
+    2 & 508           & 488       & 61                     \\
+    3 & 44            & 24        & 122                    \\
+    4 & 508           & 488       & 125                    \\
+    5 & 508           & 488       & 186                    \\
+    6 & 44            & 24        & 247                    \\
+    7 & 88            & 68        & 250
+  \end{tabular}
+\end{table}
+
+Note-se que o offset vai sendo incrementando em $\frac{\text{data size}}{8}$ blocos
+por datagrama, claro. Mais ainda, notar que o último datagrama não teve necessidade
+de ser truncado, pelo que a sua estrutura manteve-se intacta.
