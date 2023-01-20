@@ -106,11 +106,11 @@
         Seria algo como:
 
         \begin{enumerate}
-          \item Se $\texttt{IP\_destino} \wedge 255.224.0.0 = 193.32.0.0$ OU
-                $\texttt{IP\_destino} \wedge 255.255.192.0 = 193.64.0.0$, enviar para $P$.
-          \item Caso contrário, se $\texttt{IP\_destino} \wedge 255.224.0.0 = 193.64.0.0$,
+          \item Se $\texttt{IP\_destino} \text{ \& } 255.224.0.0 = 193.32.0.0$ OU
+                $\texttt{IP\_destino} \text{ \& } 255.255.192.0 = 193.64.0.0$, enviar para $P$.
+          \item Caso contrário, se $\texttt{IP\_destino} \text{ \& } 255.224.0.0 = 193.64.0.0$,
                 enviar para $Q$.
-          \item Caso contrário, se $\texttt{IP\_destino} \wedge 255.240.0.0 = 193.0.0.0$, enviar para $R$.
+          \item Caso contrário, se $\texttt{IP\_destino} \text{ \& } 255.240.0.0 = 193.0.0.0$, enviar para $R$.
         \end{enumerate}
 
         Note-se que não existe aqui (porque não é especificada no enunciado) a \textit{default route},

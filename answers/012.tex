@@ -11,9 +11,54 @@
   \subquestion{
   \item Determine os custos das duas abordagens para multicast.
         }
+
+        Considerando uma abordagem via árvore binária, com 32 destinos possíveis,
+        vamos ter, claro, $\log_2{32} = 5$ níveis de encaminhadores; neste sentido:
+
+        \begin{itemize}
+          \item Para a primeira abordagem, emulação com encaminhamento unicast,
+                o custo corresponderá ao produto entre o número de níveis na árvore e
+                o número de destinos possíveis, já que cada mensagem irá seguir um caminho
+                específico por destino; existirá um datagrama por cada
+                vez que um encaminhador \textit{encaminha} um datagrama para um destino;
+          \item Para a segunda abordagem, encaminhamento multicast, o custo corresponderá
+                ao número de arestas na árvore, já que cada encaminhador irá fazer
+                \textit{broadcast} de um datagrama para todos os seus filhos.
+        \end{itemize}
+
+        Assim sendo, podemos dizer:
+
+        \begin{itemize}
+          \item Primeira abordagem: $D \times \log_2{D} = 32 \times 5 = 160$;
+          \item Segunda abordagem: $\sum_{i=1}^{\log_2{D}} 2^i = 62$.
+        \end{itemize}
+
         \subquestion{
   \item Encontre a topologia de rede, incluindo a fonte, os destinos, e tantos encaminhadores
         quanto quiser, que maximiza a razão entre o custo da abordagem por emulação com
         encaminhamento unicast e o custo da abordagem por encaminhamento multicast na camada.
         }
+
+        Queremos, portanto, maximizar $\frac{\text{custo unicast}}{\text{custo multicast}}$.
+        Note-se que abordagens multicast são mais eficientes em topologias
+        completamente esguias até ao último nível, já que não terá de haver divisão
+        de datagramas por vários caminhos; por outro lado, e apesar de
+        também ser mais eficiente do que abordagens binárias no caso de unicast,
+        o caminho terá também de ser percorrido 1 vez por destino. Assim sendo, o
+        cenário que maximiza o rácio pretendido é o seguinte:
+
+        \begin{figure}[h]
+          \centering
+          \includesvg[width=0.4\textwidth]{assets/012b.svg}
+        \end{figure}
+
+        Em abordagens por emulação com encaminhamento unicast, o custo será, considerando
+        $N$ níveis, $(N + 1) \times D$; por outro lado, com encaminhamento multicast,
+        o custo será $(N - 1) + D$. Considerando $D = 32$, ou seja, introduzindo
+        o contexto do problema, a razão pretendida tenderá então para 32:
+
+        $$
+          \frac{32(N + 1)}{N - 1 + 32} \to 32
+        $$
+
 \end{enumerate}

@@ -13,11 +13,51 @@
         comprimentos dos caminhos mais curtos para alcançar cada um dos outros nós. Apresente
         as entradas das tabelas de encaminhamento no que diz respeito ao nó destino $D$.
         }
+
+        No instante inicial:
+
+        \begin{itemize}
+          \item $A$ sabe que o caminho mais curto para $D$ é direto, com custo 1.
+          \item $B$ sabe que o caminho mais curto para $D$ é $B-A-D$, com custo 3.
+          \item $C$ sabe que o caminho mais curto para $D$ é $C-A-D$, com custo 2.
+          \item $D$ para $D$ é direto, com custo 0.
+        \end{itemize}
+
         \subquestion{
   \item No instante $t_1$ a ligação $A-D$ falha. Assumindo que os nós trocam mensagens
         sincronamente em instantes bem definidos, $t_1, t_2, t_3, ...$, mostre a evolução das
         tabelas de encaminhamento até que o protocolo volte a estabilizar.
         }
+
+        Inicialmente, todas as tabelas de custo tinham o seguinte aspeto (para todos os nós):
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l|l}
+            From/Cost to & A & B & C & D \\ \hline
+            A            & 0 & 2 & 1 & 1 \\
+            B            & 2 & 0 & 2 & 3 \\
+            C            & 1 & 2 & 0 & 2 \\
+            D            & 1 & 3 & 2 & 0
+          \end{tabular}
+        \end{table}
+
+        Após a ligação $A-D$ falhar, no instante $t_1$, as tabelas de $A$ e $D$
+        são atualizadas:
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l|l}
+            From/Cost to & A & B & C & D                          \\ \hline
+            A            & 0 & 2 & 1 & $\min\{2 + 3, 1 + 2\} = 3$ \\
+            B            & 2 & 0 & 2 & 3                          \\
+            C            & 1 & 2 & 0 & 2                          \\
+            D            & 1 & 3 & 2 & $\min\{3 + 2, 2 + 1\} = 3$
+          \end{tabular}
+        \end{table}
+
+        \dots (acabo depois)
+
         \subquestion{
   \item Repita a alínea anterior, mas assumindo agora que o protocolo utilizado é
         vetor-caminho. Neste protocolo os nós trocam entre si não apenas a distância para

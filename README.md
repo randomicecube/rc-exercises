@@ -13,7 +13,7 @@ My solutions to the Computer Networks exercise sheets.
 - [x] Exercise 9
 - [x] Exercise 10
 - [ ] Exercise 11
-- [ ] Exercise 12
+- [x] Exercise 12
 - [ ] Exercise 13
 - [ ] Exercise 14
 - [ ] Exercise 15
