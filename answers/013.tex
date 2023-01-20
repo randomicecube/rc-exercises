@@ -5,6 +5,17 @@
 
   \begin{figure}[H]
     \centering
-    \includesvg[width=0.6\textwidth]{assets/013.svg}
+    \includesvg[width=0.4\textwidth]{assets/013.svg}
   \end{figure}
 }
+
+A lógica do algoritmo em questão é relativamente simples: cada nó envia uma cópia
+do datagrama para todos os seus vizinhos, exceto, claro, para o nó que o enviou.
+O nó que recebe tem duas escolhas: caso já tenha recebido o datagrama, descarta-o;
+caso contrário, envia-o da forma descrita acima. Assim sendo, o número de cópias
+que atravessa a rede pode ser obtido como é mostrado abaixo:
+
+\begin{figure}[H]
+  \centering
+  \includesvg[width=0.4\textwidth]{assets/013a.svg}
+\end{figure}
