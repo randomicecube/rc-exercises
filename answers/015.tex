@@ -14,7 +14,39 @@
   \item Qual o atraso de propagação, incluindo atrasos introduzidos nos repetidores
         de $A$ para $B$? Suponha uma velocidade de propagação no cabo de $2 \times 10^8 m/s$.
         }
+
+        O atraso de propagação pretendido corresponderá à soma entre o tempo de propagação
+        normal, sem repetidores, e o tempo de propagação introduzido pelos mesmos.
+
+        No cabo, a velocidade de propagação é  de $2 \times 10^8 m/s$, pelo que, percorrendo
+        $900 m$, o tempo de propagação será de $4.5 \times 10^{-6} s$. Mais ainda, é introduzido
+        um atraso de $20$ bits em cada repetidor - podendo transmitir $10 Mbit/s = 10^7 bit/s$, cada repetidor
+        introduzirá, assim, um atraso de $2 \times 10^{-6} s$. Assim sendo, no total,
+        o atraso de propagação será de $4.5 \times 10^{-6} s + 4 \times 2 \times 10^{-6} s = 1.25 \times 10^{-5} s$.
+
         \subquestion{
   \item Em que instante de tempo é que o pacote de $A$ é completamente recebido em $B$?
         }
+
+        O diagrama espaço-tempo da interação em questão é o que se segue:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.6\textwidth]{assets/015b.svg}
+        \end{figure}
+
+        Passados $1.25 \times 10^{-6} s$ desde o início da transmissão, $A$ e $B$
+        apercebem-se da colisão, pelo que param de transmitir - a transmissão em
+        si só chega completamente ao outro lado $1.25 \times 10^{-6} s$ depois,
+        pelo que só aqui já se passaram $2.5 \times 10^{-6} s$ desde o início da
+        transmissão. De seguida, com $A$ a escolher $K=0$, pode logo voltar a
+        transmitir; por outro lado, $B$ tem de esperar $512$ bits, o que corresponde
+        a $5.12 \times 10^{-5}s$. Note-se que a transmissão de $1000$ bits leva
+        $100 \times 10^{-6} s$, pelo que $B$ até tenta começar a transmitir sensivelmente
+        a meio da transmissão de $A$, mas apercebendo-se que este está a transmitir,
+        não o faz, voltando a tentar depois de $5.12 \times 10^{-5}s$ (e aqui a
+        transmissão de $A$ já terminou). Ao todo, passaram $3 \times 12.5 \times 10^{-6} + 100 \times 10^{-6} = 137.5 \mu s$
+        desde o início da transmissão, até ao pacote de $A$ ser completamente
+        recebido em $B$.
+
 \end{enumerate}
