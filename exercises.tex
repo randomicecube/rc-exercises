@@ -14,6 +14,8 @@
 \usepackage{multirow}
 \usepackage{fancyhdr}
 \usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage[font=small,labelfont=bf,tableposition=top]{caption}
 \usepackage[most]{tcolorbox}
 \usepackage[colorlinks=true]{hyperref}
 
@@ -22,6 +24,7 @@
 \definecolor{yellow}{rgb}{1,0.96,0.9}
 \definecolor{babyblue}{rgb}{0.714,0.882,0.965}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclareCaptionLabelFormat{andtable}{#1~#2  \&  \tablename~\thetable}
 \newcommand*\xor{\oplus}
 
 \def\EXS_AMT{17}

@@ -17,5 +17,5 @@ My solutions to the Computer Networks exercise sheets.
 - [x] Exercise 13
 - [x] Exercise 14
 - [x] Exercise 15
-- [ ] Exercise 16
+- [x] Exercise 16
 - [ ] Exercise 17
