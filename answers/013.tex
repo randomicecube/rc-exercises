@@ -9,11 +9,24 @@
   \end{figure}
 }
 
-A lógica do algoritmo em questão é relativamente simples: cada nó envia uma cópia
-do datagrama para todos os seus vizinhos, exceto, claro, para o nó que o enviou.
-O nó que recebe tem duas escolhas: caso já tenha recebido o datagrama, descarta-o;
-caso contrário, envia-o da forma descrita acima. Assim sendo, o número de cópias
-que atravessa a rede pode ser obtido como é mostrado abaixo:
+A lógica do algoritmo em questão é relativamente simples: corresponde a uma
+"variação" do algoritmo de Dijkstra, em que sempre que olhamos para um novo nó, fazemos
+\textit{broadcast} do datagrama para todos os seus vizinhos (exceto o pai).
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l|l|l|l|l|l|l|l|l|l}
+      & Nós Vistos                   & $d_A, \pi_A$ & $d_B, \pi_B$ & $d_C, \pi_C$ & $d_D, \pi_D$ & $d_E, \pi_E$ & $d_F, \pi_F$ & $d_G, \pi_G$ & $d_H, \pi_H$ \\ \hline
+    1 & $\{D\}$                      & $\infty$     & 9            & 1            & 0            & 1            & 3            & 1            & $\infty$     \\
+    2 & $\{D, C\}$                   & 5            & 3            & 1            & 0            & 1            & 3            & 1            & $\infty$     \\
+    3 & $\{D, C, E\}$                & 5            & 3            & 1            & 0            & 1            & 2            & 1            & $\infty$     \\
+    4 & $\{D, C, E, G\}$             & 5            & 3            & 1            & 0            & 1            & 2            & 1            & 15           \\
+    5 & $\{D, C, E, G, F\}$          & 5            & 3            & 1            & 0            & 1            & 2            & 1            & 15           \\
+    6 & $\{D, C, E, G, F, B\}$       & 4            & 3            & 1            & 0            & 1            & 2            & 1            & 5            \\
+    7 & $\{D, C, E, G, F, B, A\}$    & 4            & 3            & 1            & 0            & 1            & 2            & 1            & 5            \\
+    8 & $\{D, C, E, G, F, B, A, H\}$ & 4            & 3            & 1            & 0            & 1            & 2            & 1            & 5
+  \end{tabular}
+\end{table}
 
 \begin{figure}[H]
   \centering
