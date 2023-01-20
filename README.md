@@ -18,4 +18,4 @@ My solutions to the Computer Networks exercise sheets.
 - [x] Exercise 14
 - [x] Exercise 15
 - [x] Exercise 16
-- [ ] Exercise 17
+- [x] Exercise 17

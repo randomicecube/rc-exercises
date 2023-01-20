@@ -23,9 +23,31 @@
 
   \begin{figure}[H]
     \centering
-    \includesvg[width=0.4\textwidth]{assets/017.svg}
+    \includesvg[width=0.3\textwidth]{assets/017.svg}
   \end{figure}
 }
+
+O seguinte diagrama espaço-tempo será útil para a resolução das alíneas que não
+contemplam CSMA/CA com RTS-CTS:
+
+\begin{figure}[H]
+  \centering
+  \includesvg[width=0.9\textwidth]{assets/017-empty-csma.svg}
+\end{figure}
+
+Tal como se pode visualizar no diagrama acima, enquanto $X$ tenta transmitir,
+todas as estações tentam transmitir (mas não conseguem, porque todas sabem
+que $X$ está também a transmitir). Neste sentido, após essa transmissão,
+todas as estações entram num período de \textit{back-off}, sendo que a primeira
+a sair dele é a estação $A$, que começa a transmitir a sua trama no instante
+$170 \mu s$. Ora, $B$ não consegue "ouvir" $A$, pelo que não interrompe o
+seu período de back-off (ao contrário de $C$, que interrompe passados $70 \mu s$,
+restando $80 \mu s$ para o seu período terminar). Assim, quando $A$ termina
+de transmitir, faltam $30 \mu s$ para $B$ terminar o seu período de back-off,
+e $80 \mu s$ para $C$ terminar o seu. $B$ começa a transmitir a sua trama
+aos $300 \mu s$, e $C$ aos $350 \mu s$, entrando em colisão (já que nenhum dos
+dois ouve o outro). No fim, $X$ não faz \textit{acknowledgement} de nenhuma
+das tramas, pelo que só agora é que as estações se apercebem da colisão.
 
 \begin{enumerate}[leftmargin=\labelsep]
   \subquestion{
@@ -33,18 +55,48 @@
         a transmitir a sua trama pela primeira vez? Despreze atrasos de propagação,
         intervalos-entre-tramas (inter-frame spacings) e tempos de transmissão dos ACK.
         }
+
+        Tal como referido na explicação acima:
+
+        \begin{itemize}
+          \item $A$: $170 \mu s$
+          \item $B$: $300 \mu s$
+          \item $C$: $350 \mu s$
+        \end{itemize}
+
         \subquestion{
   \item Das três tramas transmitidas pelas estações quais é que são bem recebidas
         na primeira tentativa de transmissão?
         }
+
+        Apenas a trama de $A$ é bem recebida na primeira tentativa de transmissão,
+        tendo o respetivo ACK sido enviado por $X$ no instante $270 \mu s$.
+
         \subquestion{
   \item Para cada uma das tramas que não é bem recebida na primeira tentativa de transmissão,
         indique qual o instante de tempo em que a estação correspondente se apercebe de que
         a trama foi perdida. As tramas serão bem recebidas na segunda tentativa de transmissão?
         }
+
+        Ambas as estações apercebem-se no mesmo instante, $500 \mu s$. Nenhuma delas
+        conseguirá transmitir sem colisão na segunda tentativa, já que $B$ voltará a transmitir
+        enquanto $C$ transmite.
+
         \subquestion{
   \item Suponha agora que se ativa o protocolo de acesso ao meio RTS-CTS. Neste caso, em
         que instante de tempo é que cada estação começa a transmitir a sua trama pela
         primeira vez? As tramas são todas recebidas com sucesso?
         }
+
+        O diagrama espaço-tempo para esta interação é o seguinte:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.9\textwidth]{assets/017-rts-cts.svg}
+        \end{figure}
+
+        Note-se que ao utilizar este protocolo de acesso ao meio, não há obrigatoriedade
+        das várias estações se ouvirem, já que todas esperam pela concessão de
+        acesso por parte de $X$. Temos, claro, que agora todas tramas são recebidas com
+        sucesso, nos instantes indicados na figura.
 \end{enumerate}
