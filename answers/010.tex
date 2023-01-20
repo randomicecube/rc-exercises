@@ -11,19 +11,81 @@
   \subquestion{
   \item Preencha uma tabela ilustrando a execução do algoritmo de Dijkstra a partir do nó $A$.
         }
+
+        (A aplicação do algoritmo já foi abordada \href{https://resumos.leic.pt/asa/caminhos-mais-curtos/#algoritmo-de-dijkstra}{em ASA}, pelo que
+        não será descrita em pormenor nesta resposta.)
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l|l|l|l}
+              & Nós vistos          & $d_A, \pi_A$ & $d_B, \pi_B$ & $d_C, \pi_C$ & $d_D, \pi_D$ & $d_E, \pi_E$ \\ \hline
+            1 & $\{A\}$             & 0, -         & 1, A         & 6, A         & 2, A         & $\infty$     \\
+            2 & $\{A, B\}$          & 0, -         & 1, A         & 4, B         & 2, A         & $\infty$     \\
+            3 & $\{A, B, D\}$       & 0, -         & 1, A         & 4, B         & 2, A         & 4, D         \\
+            4 & $\{A, B, D, C\}$    & 0, -         & 1, A         & 4, B         & 2, A         & 4, D         \\
+            5 & $\{A, B, D, C, E\}$ & 0, -         & 1, A         & 4, B         & 2, A         & 4, D
+          \end{tabular}
+        \end{table}
+
         \subquestion{
   \item Apresente o pseudocódigo genérico que cada nó tem que executar para a partir
         dos cálculos efetuados com o algoritmo de Dijkstra popular a sua tabela de expedição.
         Preencha a tabela de expedição do nó $A$.
         }
+
+        O pseudocódigo é relativamente simples: para cada nó, após a aplicação de
+        Dijkstra, temos o respetivo pai; basta então percorrer a árvore de caminhos
+        mais curtos a partir do nó de destino, até ao nó de origem, por forma a
+        obter o nó que a ele vai dar desde a origem - na tabela de expedição, o
+        custo será o calculado pelo algoritmo de Dijkstra, e o nó de encaminhamento
+        será o nó ligado à origem na árvore de caminhos mais curtos que liga o
+        nó de destino ao nó de origem. Para o caso da alínea anterior, teríamos
+        uma árvore como a que se segue:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.12\textwidth]{assets/010b.svg}
+        \end{figure}
+
+        A tabela de expedição em questão é a seguinte:
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{l|l|l|l}
+              & Destino & Custo & Encaminhar p/ \\ \hline
+            1 & B       & 1     & A             \\
+            2 & C       & 4     & B             \\
+            3 & D       & 2     & A             \\
+            4 & E       & 4     & D             \\
+            5 & A       & 0     & local
+          \end{tabular}
+        \end{table}
+
         \subquestion{
   \item Suponha que, devido a atrasos na difusão de um LSP, o nó $A$ não tem conhecimento
         da ligação $D-E$, e só dela não tem conhecimento. Todos os outros nós têm conhecimento
         completo da topologia da rede. O que acontece aos pacotes enviados pelo nó $A$ com
         destino ao nó $E$? Conclua sobre o regime transitório de um protocolo estado-da-ligação.
         }
+
+        Na tabela, a quarta linha é alterada para o tuplo \texttt{(E, 8, C)}; os pacotes
+        serão enviados para $B$, que sabe que o caminho mais curto até $E$ é $BADE$,
+        pelo que os pacotes serão encaminhados de volta a $A$. Como $A$ não tem conhecimento
+        da ligação $D-E$, os pacotes serão enviados novamente para $B$, ficando
+        assim num \textit{loop} infinito.
+
         \subquestion{
   \item Suponha que é estabelecida um nova ligação entre os nós $D$ e $B$ com comprimento $2$.
         No total, quantos LSPs é que vão viajar pela rede?
         }
+
+        $B$ e $D$ apercebem-se da alteração, claro, e serão eles a fazer o primeiro
+        \textit{broadcast} dos LSPs. $B$ informa $A$, $C$, e $D$, que por sua vez informam
+        os seus filhos, etc. Abaixo encontra-se uma ilustração do processo:
+
+        \begin{figure}[H]
+          \centering
+          \includesvg[width=0.6\textwidth]{assets/010d-tree.svg}
+        \end{figure}
+
 \end{enumerate}
