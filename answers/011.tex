@@ -18,8 +18,8 @@
 
         \begin{itemize}
           \item $A$ sabe que o caminho mais curto para $D$ é direto, com custo 1.
-          \item $B$ sabe que o caminho mais curto para $D$ é $B-A-D$, com custo 3.
-          \item $C$ sabe que o caminho mais curto para $D$ é $C-A-D$, com custo 2.
+          \item $B$ sabe que o caminho mais curto para $D$ tem próximo passo $A$, com custo total 3.
+          \item $C$ sabe que o caminho mais curto para $D$ tem próximo passo $A$, com custo total 2.
           \item $D$ para $D$ é direto, com custo 0.
         \end{itemize}
 
@@ -34,33 +34,27 @@
         \begin{table}[H]
           \centering
           \begin{tabular}{l|l|l|l|l}
-            From/Cost to & A & B & C & D \\ \hline
-            A            & 0 & 2 & 1 & 1 \\
-            B            & 2 & 0 & 2 & 3 \\
-            C            & 1 & 2 & 0 & 2 \\
-            D            & 1 & 3 & 2 & 0
+            From/Cost to & A, $\pi$ & B, $\pi$ & C, $\pi$ & D, $\pi$ \\ \hline
+            A            & 0        & 2, B     & 1, C     & 1, D     \\
+            B            & 2, A     & 0        & 2, C     & 3, A     \\
+            C            & 1, A     & 2, B     & 0        & 2, A     \\
+            D            & 1, A     & 3, A     & 2, A     & 0
           \end{tabular}
         \end{table}
 
-        Após a ligação $A-D$ falhar, no instante $t_1$, as tabelas de $A$ e $D$
-        são atualizadas:
+        Após a ligação $A-D$ falhar, as tabelas vão sendo progressivamente atualizadas,
+        como se segue:
 
-        \begin{table}[H]
+        \begin{figure}[H]
           \centering
-          \begin{tabular}{l|l|l|l|l}
-            From/Cost to & A & B & C & D                          \\ \hline
-            A            & 0 & 2 & 1 & $\min\{2 + 3, 1 + 2\} = 3$ \\
-            B            & 2 & 0 & 2 & 3                          \\
-            C            & 1 & 2 & 0 & 2                          \\
-            D            & 1 & 3 & 2 & $\min\{3 + 2, 2 + 1\} = 3$
-          \end{tabular}
-        \end{table}
-
-        \dots (acabo depois)
+          \includegraphics[width=0.7\textwidth]{assets/011b.png}
+        \end{figure}
 
         \subquestion{
   \item Repita a alínea anterior, mas assumindo agora que o protocolo utilizado é
         vetor-caminho. Neste protocolo os nós trocam entre si não apenas a distância para
         alcançar cada destino mas também todo o caminho (sequência de nós) associado a essa distância.
         }
+
+        \dots (acabo depois)
 \end{enumerate}
